@@ -1,16 +1,18 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 )
+
+// Create a structure for the task list
 
 type Task struct {
 	name        string
 	description string
 	complete    bool
 }
+
+// Create a structure for the to-do list
 
 type ListToDo struct {
 	tasks []Task
@@ -43,7 +45,6 @@ func (l *ListToDo) deleteTask(index int) {
 	l.tasks = append(l.tasks[:index], l.tasks[index+1:]...)
 }
 func main() {
-	Read := bufio.NewReader(os.Stdin)
 	List := ListToDo{}
 	for {
 		var option int
@@ -59,10 +60,10 @@ func main() {
 		switch option {
 		case 1:
 			var t Task
-			fmt.Printf("Add a task's name: \n")
-			fmt.Printf("Add a description: \n")
-			t.name, _ = Read.ReadString('\n')
-			t.description, _ = Read.ReadString('\n')
+			fmt.Printf("Add a task's name: ")
+			fmt.Scan(&t.name)
+			fmt.Printf("Add a description: ")
+			fmt.Scan(&t.description)
 			List.addTask(t)
 			fmt.Println("The task was added")
 		case 2:
@@ -74,12 +75,12 @@ func main() {
 		case 3:
 			var index int
 			var t Task
-			fmt.Print("Add index to update the task : \n")
+			fmt.Print("Add index to update the task : ")
 			fmt.Scan(&index)
-			fmt.Print("Add a task's name: \n")
-			t.name, _ = Read.ReadString('\n')
+			fmt.Print("Add a task's name: ")
+			fmt.Scan(&t.name)
 			fmt.Print("Add a description: ")
-			t.description, _ = Read.ReadString('\n')
+			fmt.Scan(&t.description)
 			List.UpdateTask(index, t)
 			fmt.Println("This task was updated.")
 		case 4:
@@ -99,7 +100,7 @@ func main() {
 		fmt.Println("List to DO:")
 		fmt.Println("============================================")
 		for i, t := range List.tasks {
-			fmt.Printf("%d. %s - %s - Completado: %t\n", i, t.name, t.description, t.complete)
+			fmt.Printf("%d - %s - %s - Completado: %t\n", i, t.name, t.description, t.complete)
 		}
 		fmt.Println("============================================")
 
